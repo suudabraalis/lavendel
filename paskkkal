@@ -245,6 +245,7 @@ begin  //Dialogi
          C:=ReadKey;
          writeln('  Got "Sword"');
          sword:='Sword';
+         i1:=sword;
          Quest1:=3;
          C:=ReadKey;
          end;
