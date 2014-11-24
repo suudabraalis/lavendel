@@ -1,1 +1,253 @@
-wusup home
+program massiv2;
+ uses crt;
+const   num=10;   {masiva izmers}
+var
+
+   C: char;
+   z, i, y, j, x, KUST,
+   siena, NPC, NPC1,
+   Collision_UP, Collision_DOWN, Collision_LEFT, Collision_RIGHT,
+   Quest1,
+   Obj, Obj1
+   : integer;
+   i1, i2, i3, i4, i5, sword: string;
+   masivs: array[1..num, 1..num] of integer;
+
+label MAPE, COLLISION_TRUE, DIALOGI, KUSTIBA, BEIGAS, QUESTS, INVENTORY;
+begin
+y:=5; x:=5; {Sakuma koordinates} z:=8; {Skaitlis kas kustas}
+i:=y; j:=x;
+//Objekti
+siena:=1;       masivs[4,4]:=siena;
+                masivs[3,4]:=siena;
+                masivs[3,5]:=siena;
+
+NPC:=9;
+NPC1:=NPC;      masivs[6,6]:=NPC1;
+
+Obj:=1;
+Obj1:=Obj;        masivs[1,9]:=Obj1;
+
+
+MAPE:
+begin  //Mapes generesana un objekti(atkārtoti)
+i:=y;
+j:=x;
+masivs[i,j]:=z;
+
+   begin //Saskarsanaas
+   if masivs[i-1,j]=siena  {Uz leju}
+      then Collision_UP:=1
+      else Collision_UP:=0;
+   if masivs[i+1,j]=siena  {Uz augsu}
+      then Collision_DOWN:=1
+      else Collision_DOWN:=0;
+   if masivs[i,j-1]=siena  {Pa kreisi}
+      then Collision_LEFT:=1
+      else Collision_LEFT:=0;
+   if masivs[i,j+1]=siena  {Pa labi}
+      then Collision_RIGHT:=1
+      else Collision_RIGHT:=0;
+if Collision_UP=1 then goto COLLISION_TRUE;
+if Collision_DOWN=1 then goto COLLISION_TRUE;
+if Collision_LEFT=1 then goto COLLISION_TRUE;
+if Collision_RIGHT=1 then goto COLLISION_TRUE;
+   end;
+
+COLLISION_TRUE:
+begin  //Masiva generesana
+clrscr;
+masivs[i,j]:=z;
+for i:=1 to num do  {Uzgenereta masiva izvads}
+   begin
+   writeln;
+   for j:=1 to num do
+       write(masivs[i,j]:4)
+   end;
+writeln;
+   //Nodzes veco skaitli
+for i:=1 to num do
+   for j:=1 to num do
+      masivs[i,j]:=0;
+writeln;
+writeln('Press "H" for HEALP!');
+end;
+
+QUESTS:
+begin
+if quest1=1 then
+   begin
+   Obj1:=5;
+   Obj:=obj1;
+   if masivs[y,x]=obj1 then
+      begin
+      Obj1:=0;
+      quest1:=2;
+      writeln('Got the quest object!');
+      writeln('Now go talk to the quest giver for your "Reward".');
+      writeln;
+      writeln('New objective: Go talk to the quest giver.');
+      end;
+   end;
+end;
+
+   //Objekti kurus nevajag nodzēst
+   masivs[4,4]:=siena;
+   masivs[3,4]:=siena;
+   masivs[3,5]:=siena;
+
+   masivs[6,6]:=NPC1;
+
+   masivs[1,9]:=Obj1;
+goto KUSTIBA;
+end;
+
+KUSTIBA:
+begin //Kustibas ievadisana
+
+      C := #0;
+      while C<>#27 do begin
+         C := ReadKey;
+    {while not Esc}
+
+
+   if C=#72 then  {UP}
+      begin
+      if collision_UP=1 then
+         begin
+         for i:=y to y do j:=x;
+         goto COLLISION_TRUE;
+         end;
+      y:=y-1;
+      if y<1 then y:=1;
+      for i:=y to y do j:=x;
+   goto MAPE;
+      end;
+
+   if C=#75 then  {LEFT}
+      begin
+      if collision_LEFT=1 then
+         begin
+         for i:=y to y do j:=x;
+         goto COLLISION_TRUE;
+         end;
+      x:=x-1;
+      if x<1 then x:=1;
+      for i:=y to y do j:=x;
+   goto MAPE;
+      end;
+
+   if C=#77 then  {RIGHT}
+      begin
+      if collision_RIGHT=1 then
+         begin
+         for i:=y to y do j:=x;
+         goto COLLISION_TRUE;
+         end;
+      x:=x+1;
+      if x>10 then x:=10;
+      for i:=y to y do j:=x;
+   goto MAPE;
+      end;
+
+   if C=#80 then  {DOWN}
+      begin
+      if collision_DOWN=1 then
+         begin
+         for i:=y to y do j:=x;
+         goto COLLISION_TRUE;
+         end;
+      y:=y+1;
+      if y>10 then y:=10;
+      for i:=y to y do j:=x;
+   goto MAPE;
+      end;
+
+   if C=#32 then  {ACTION}
+      begin
+      if masivs[y,x]=Obj
+         then goto QUESTS;
+      if masivs[y,x]=NPC
+         then goto DIALOGI;
+      writeln('No one around to interact to!');
+      goto MAPE;
+      end;
+
+   if C=#104 then {HELP}
+      begin
+      writeln;
+      writeln('Press any "arrow key" to move.');
+      writeln('Press "Space bar" for action!');
+      writeln('Press "J" for quest log');
+      writeln('Press "H" for help.');
+      end;
+
+   if C=#106 then {QUEST LOG}
+      begin
+      writeln;
+      if quest1=0 then
+         writeln('No quests.');
+      if quest1=1 then
+         writeln('You should look around (9;10) coordinates for 5');
+      if quest1=2 then
+         writeln('You should go to 9 and give him his 5');
+      if quest1=3 then
+         writeln('Quest complete!');
+      end;
+   if C=#105 then {INVENTORY}
+      if quest1=3 then
+         i1:=sword;
+         writeln('Inventory: ',i1,' ');
+
+end;
+
+
+   writeln;
+   writeln(' Unknown command, to exit write: 0 ');
+   writeln(' To continue write any number.');
+   read(KUST);
+   if KUST=0 then goto BEIGAS
+      else goto MAPE;
+   end;
+
+DIALOGI:
+begin  //Dialogi
+      begin //QUEST1
+      if quest1=0 then
+         begin
+         writeln('Hello thare!');
+         writeln('I have lost a 5, could you find it for me?');
+         writeln;
+         writeln('Press "Spacebar" to accept the quest, any other key will decline.');
+         C := ReadKey;
+         if C=#32 then
+            begin
+            Quest1:=1;
+            writeln('Exelent! I have heard that 5 roams around coordinates (9;10)');
+            C:=ReadKey;
+            goto MAPE;
+            end;
+         writeln('Ah well');
+         C:=ReadKey;
+         goto MAPE;
+         end;
+      if quest1=1 then
+         writeln('Have you found my 5 yet?');
+         C:=ReadKey;
+      if quest1=2 then
+         begin
+         writeln('There it is!');
+         writeln('Thank you very much, have this useless (for now) sword');
+         C:=ReadKey;
+         writeln('  Got "Sword"');
+         sword:='Sword';
+         Quest1:=3;
+         C:=ReadKey;
+         end;
+      goto MAPE;
+      end;
+end;
+
+BEIGAS:
+end.
+end.
