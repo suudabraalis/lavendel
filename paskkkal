@@ -278,7 +278,7 @@ begin
 
          end;
       end;
-goto MAP;
+goto MAPE;
 end;  
 
 BEIGAS:
