@@ -28,6 +28,8 @@ NPC1:=NPC;      masivs[6,6]:=NPC1;
 Obj:=1;
 Obj1:=Obj;        masivs[1,9]:=Obj1;
 
+Shop:=7;
+Shop1:=Shop;    masivs[6,4]:=Shop1;   
 
 MAPE:
 begin  //Mapes generesana un objekti(atkārtoti)
@@ -99,6 +101,8 @@ end;
    masivs[6,6]:=NPC1;
 
    masivs[1,9]:=Obj1;
+   
+    masivs[6,4]:=Shop1;
 goto KUSTIBA;
 end;
 
@@ -169,6 +173,8 @@ begin //Kustibas ievadisana
          then goto QUESTS;
       if masivs[y,x]=NPC
          then goto DIALOGI;
+      if masivs[y,x]=SHOP
+         then goto SHOPS;    
       writeln('No one around to interact to!');
       goto MAPE;
       end;
@@ -247,6 +253,28 @@ begin  //Dialogi
       goto MAPE;
       end;
 end;
+
+SHOPS:
+begin
+   if masivs[y,x]=shop1 then
+      begin
+      writeln('Welcome stranger!');
+      writeln('Have you any need in "Special" equipment of mine?');
+      writeln('Or might you want to get rid of some of yours?')
+      writeln;
+      writeln('Press " 1 " to Buy, " 2 " to Sell');
+      C:=ReadKey;
+      if C=1 then
+         begin
+
+         end;
+      if C=2 then
+         begin
+
+         end;
+      end;
+goto MAP;
+end;  
 
 BEIGAS:
 end.
