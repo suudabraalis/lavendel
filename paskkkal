@@ -3,7 +3,7 @@ program massiv2;
 const   num=10;   {masiva izmers}
 var
 
-   C: char;
+   C: char
    z, i, y, j, x, KUST,
    siena, NPC, NPC1,
    Collision_UP, Collision_DOWN, Collision_LEFT, Collision_RIGHT,
