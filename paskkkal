@@ -8,12 +8,12 @@ var
    siena, NPC, NPC1,
    Collision_UP, Collision_DOWN, Collision_LEFT, Collision_RIGHT,
    Quest1,
-   Obj, Obj1
+   Obj, Obj1, shop, shop1
    : integer;
    i1, i2, i3, i4, i5, sword: string;
    masivs: array[1..num, 1..num] of integer;
 
-label MAPE, COLLISION_TRUE, DIALOGI, KUSTIBA, BEIGAS, QUESTS, INVENTORY;
+label MAPE, COLLISION_TRUE, DIALOGI, KUSTIBA, BEIGAS, QUESTS, INVENTORY, SHOPS;
 begin
 y:=5; x:=5; {Sakuma koordinates} z:=8; {Skaitlis kas kustas}
 i:=y; j:=x;
@@ -29,7 +29,13 @@ Obj:=1;
 Obj1:=Obj;        masivs[1,9]:=Obj1;
 
 Shop:=7;
-Shop1:=Shop;    masivs[6,4]:=Shop1;   
+Shop1:=Shop;    masivs[6,4]:=Shop1;
+
+i1:='';
+i2:='';
+i3:='';
+i4:='';
+i5:='';
 
 MAPE:
 begin  //Mapes generesana un objekti(atkārtoti)
@@ -259,15 +265,15 @@ begin
       begin
       writeln('Welcome stranger!');
       writeln('Have you any need in "Special" equipment of mine?');
-      writeln('Or might you want to get rid of some of yours?')
+      writeln('Or might you want to get rid of some of yours?');
       writeln;
       writeln('Press " 1 " to Buy, " 2 " to Sell');
       C:=ReadKey;
-      if C=1 then
+      if C=#49 then
          begin
 
          end;
-      if C=2 then
+      if C=#50 then
          begin
 
          end;
