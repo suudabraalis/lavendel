@@ -201,9 +201,7 @@ begin //Kustibas ievadisana
          writeln('Quest complete!');
       end;
    if C=#105 then {INVENTORY}
-      if quest1=3 then
-         i1:=sword;
-         writeln('Inventory: ',i1,' ');
+         writeln('Inventory: ',i1,i2,i3,i4,i5,' '); 
 
 end;
 
